@@ -22,10 +22,9 @@ export const Card = ({title, blog, timeStamp}: CardProps) => {
   return (
     <Box
       alignItems="center"
-      marginLeft="20px"
-      marginRight="20px"
       backgroundColor={'white'}
-      marginTop={5}>
+      marginTop={5}
+      marginX="20px">
       <Box
         overflow="hidden"
         borderColor="coolGray.200"
@@ -50,11 +49,9 @@ export const Card = ({title, blog, timeStamp}: CardProps) => {
             />
           </AspectRatio>
         </Box>
-        <Stack p="4" space={3} backgroundColor={'white'}>
-          <Stack space={3}>
-            <Heading size="md" ml="-1">
-              {title}
-            </Heading>
+        <Stack p="3" space={3} backgroundColor={'white'}>
+          <Heading size="md">{title}</Heading>
+          <HStack alignItems="center" justifyContent={'space-between'}>
             <Text
               fontSize="12"
               _light={{
@@ -63,13 +60,9 @@ export const Card = ({title, blog, timeStamp}: CardProps) => {
               _dark={{
                 color: 'violet.400',
               }}
-              fontWeight="500"
-              ml="-0.5"
-              mt="-1">
+              fontWeight="500">
               {blog}
             </Text>
-          </Stack>
-          <HStack alignItems="center" justifyContent={'flex-end'}>
             <Text
               fontSize="12"
               color="coolGray.600"

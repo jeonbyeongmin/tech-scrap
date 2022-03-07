@@ -3,7 +3,7 @@ import {Box, FlatList} from 'native-base';
 import {Card} from '../components/Card';
 import {data} from '../data';
 
-export const Homescreen = () => {
+export const TechScreen = () => {
   return (
     <Box background={'white'}>
       <FlatList
