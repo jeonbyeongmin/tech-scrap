@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  AspectRatio,
-  Box,
-  Heading,
-  HStack,
-  Image,
-  Stack,
-  Text,
-} from 'native-base';
+import {Box, Heading, HStack, Image, Pressable, Stack, Text} from 'native-base';
 
 interface CardProps {
   id?: string;
@@ -16,65 +8,76 @@ interface CardProps {
   blog: string;
   timeStamp: string;
   cliked: number;
+  image: string;
+  onPress?: () => void;
 }
 
-export const Card = ({title, blog, timeStamp}: CardProps) => {
+export const Card = ({title, blog, image, timeStamp, onPress}: CardProps) => {
   return (
     <Box
       alignItems="center"
       backgroundColor={'white'}
       marginTop={5}
-      marginX="20px">
-      <Box
-        overflow="hidden"
-        borderColor="coolGray.200"
-        _dark={{
-          borderColor: 'coolGray.600',
-          backgroundColor: 'gray.700',
-        }}
-        _web={{
-          shadow: 2,
-          borderWidth: 0,
-        }}
-        _light={{
-          backgroundColor: 'gray.50',
-        }}>
-        <Box>
-          <AspectRatio w="100%" ratio={16 / 9}>
+      marginX="20px"
+      height={'90px'}>
+      <Pressable onPress={onPress}>
+        <Box
+          overflow="hidden"
+          borderColor="coolGray.200"
+          _dark={{
+            borderColor: 'coolGray.600',
+            backgroundColor: 'gray.700',
+          }}
+          _web={{
+            shadow: 2,
+            borderWidth: 0,
+          }}
+          _light={{
+            backgroundColor: 'gray.50',
+          }}>
+          <HStack>
             <Image
+              w="2/6"
               source={{
-                uri: 'https://tech.kakao.com/wp-content/uploads/2022/02/main_fe-802x333.png',
+                uri: image,
               }}
               alt="image"
             />
-          </AspectRatio>
-        </Box>
-        <Stack p="3" space={3} backgroundColor={'white'}>
-          <Heading size="md">{title}</Heading>
-          <HStack alignItems="center" justifyContent={'space-between'}>
-            <Text
-              fontSize="12"
-              _light={{
-                color: 'violet.500',
-              }}
-              _dark={{
-                color: 'violet.400',
-              }}
-              fontWeight="500">
-              {blog}
-            </Text>
-            <Text
-              fontSize="12"
-              color="coolGray.600"
-              _dark={{
-                color: 'warmGray.200',
-              }}
-              fontWeight="400">
-              {timeStamp}
-            </Text>
+            <Stack
+              p="3"
+              w="4/6"
+              space={2}
+              paddingLeft={'20px'}
+              backgroundColor={'white'}>
+              <Heading size="sm" numberOfLines={2}>
+                {title}
+              </Heading>
+              <HStack alignItems="center" justifyContent={'space-between'}>
+                <Text
+                  fontSize="12"
+                  _light={{
+                    color: 'violet.500',
+                  }}
+                  _dark={{
+                    color: 'violet.400',
+                  }}
+                  fontWeight="500">
+                  {blog}
+                </Text>
+                <Text
+                  fontSize="12"
+                  color="coolGray.600"
+                  _dark={{
+                    color: 'warmGray.200',
+                  }}
+                  fontWeight="400">
+                  {timeStamp}
+                </Text>
+              </HStack>
+            </Stack>
           </HStack>
-        </Stack>
-      </Box>
+        </Box>
+      </Pressable>
     </Box>
   );
 };

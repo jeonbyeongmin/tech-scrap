@@ -18,7 +18,7 @@ export const Header = ({onPress}: HeaderProps) => {
           source={logo}
           alt="image"
           resizeMode="contain"
-          width="16"
+          width="1/4"
           height="auto"
         />
         <Button onPress={onPress} variant="unstyled">

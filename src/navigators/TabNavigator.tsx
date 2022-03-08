@@ -17,6 +17,9 @@ export const TabNavigator = () => {
         headerStyle: {
           height: 100,
         },
+        cardStyle: {
+          backgroundColor: '#fff',
+        },
       })}>
       <Tab.Screen
         name="Post"
@@ -33,6 +36,7 @@ export const TabNavigator = () => {
         name="Search"
         component={SearchScreen}
         options={{
+          headerShown: false,
           title: '검색',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="search-outline" color={color} size={size} />
