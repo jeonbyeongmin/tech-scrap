@@ -32,10 +32,8 @@ export const Card = ({title, blog, image, timeStamp, onPress}: CardProps) => {
             shadow: 2,
             borderWidth: 0,
           }}
-          _light={{
-            backgroundColor: 'gray.50',
-          }}>
-          <HStack>
+          _light={{}}>
+          <HStack space={2}>
             <Image
               w="2/6"
               source={{
@@ -43,12 +41,7 @@ export const Card = ({title, blog, image, timeStamp, onPress}: CardProps) => {
               }}
               alt="image"
             />
-            <Stack
-              p="3"
-              w="4/6"
-              space={2}
-              paddingLeft={'20px'}
-              backgroundColor={'white'}>
+            <Stack p="3" w="4/6" space={2} backgroundColor={'white'}>
               <Heading size="sm" numberOfLines={2}>
                 {title}
               </Heading>

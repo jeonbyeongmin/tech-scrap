@@ -1,3 +1,14 @@
+export const blog = [
+  {
+    id: '1',
+    name: '카카오',
+  },
+  {
+    id: '2',
+    name: '카카오스타일',
+  },
+];
+
 export const data = [
   {
     id: '1',
