@@ -4,7 +4,7 @@ import {blog} from '../data';
 
 export const SelectBlogScreen = () => {
   return (
-    <Box marginY="20px" height="2xl">
+    <Box paddingBottom="30px">
       <FlatList
         data={blog}
         renderItem={({item}) => (
@@ -13,7 +13,7 @@ export const SelectBlogScreen = () => {
               borderColor: 'gray.600',
             }}
             borderColor="coolGray.200"
-            paddingX="50px"
+            paddingX="40px"
             paddingY="10px">
             <HStack space={3} justifyContent="space-between">
               <HStack alignContent="center" justifyContent="center" space={3}>
@@ -33,7 +33,14 @@ export const SelectBlogScreen = () => {
                   {item.name}
                 </Text>
               </HStack>
-              <Switch defaultIsChecked size="sm" alignSelf="center" />
+              <Switch
+                defaultIsChecked
+                size="sm"
+                onTrackColor="indigo.200"
+                onThumbColor="indigo.500"
+                offThumbColor="indigo.50"
+                alignSelf="center"
+              />
             </HStack>
           </Box>
         )}

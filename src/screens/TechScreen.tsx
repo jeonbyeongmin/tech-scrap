@@ -38,7 +38,7 @@ export const TechScreen = ({navigation}: any) => {
   const keyExtractor = useCallback(item => item.id.toString(), []);
 
   return (
-    <Box background={'white'} paddingBottom={'20px'}>
+    <Box>
       <FlatList
         data={data}
         renderItem={renderItem}
