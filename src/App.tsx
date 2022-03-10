@@ -3,6 +3,7 @@ import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {NativeBaseProvider} from 'native-base';
 import {StackNavigator} from './navigators/StackNavigator';
 
+// NativeBase 백그라운드 색깔 white로 만들기
 const MyTheme = {
   ...DefaultTheme,
   colors: {
