@@ -36,6 +36,7 @@ export const Tab = ({
     }
   }, [isFocused, layout, setToValue, setWidth]);
 
+  // TODO 제스처할 때도 움직이도록 수정
   const onLayout = (e: any) => {
     const {x, width} = e.nativeEvent.layout;
     setLayout({x, width});

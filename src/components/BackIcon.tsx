@@ -8,7 +8,7 @@ interface BackIconProps {
 
 export const BackIcon = ({onPress}: BackIconProps) => {
   return (
-    <Box marginX={5}>
+    <Box>
       <Button variant="unstyled" onPress={onPress}>
         <Ionicons name="chevron-back-outline" size={25} />
       </Button>

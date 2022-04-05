@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Box, FlatList} from 'native-base';
+import {Box, Divider, FlatList, Text} from 'native-base';
 import {Card} from '../components/Card';
 import {data} from '../data';
 

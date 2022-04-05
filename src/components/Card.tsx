@@ -1,5 +1,6 @@
 import React from 'react';
-import {Box, Heading, HStack, Image, Pressable, Stack, Text} from 'native-base';
+import {Badge, Box, Heading, HStack, Pressable, Stack, Text} from 'native-base';
+import {Views} from './Views';
 
 interface CardProps {
   id?: string;
@@ -12,14 +13,14 @@ interface CardProps {
   onPress?: () => void;
 }
 
-export const Card = ({title, blog, image, timeStamp, onPress}: CardProps) => {
+export const Card = ({title, blog, timeStamp, onPress}: CardProps) => {
   return (
     <Box
       alignItems="center"
       backgroundColor={'white'}
-      marginTop={5}
-      marginX="20px"
-      height={'90px'}>
+      paddingX={'20px'}
+      paddingY={4}
+      width={'100%'}>
       <Pressable onPress={onPress}>
         <Box
           overflow="hidden"
@@ -34,18 +35,11 @@ export const Card = ({title, blog, image, timeStamp, onPress}: CardProps) => {
           }}
           _light={{}}>
           <HStack space={2}>
-            <Image
-              w="2/6"
-              source={{
-                uri: image,
-              }}
-              alt="image"
-            />
-            <Stack p="3" w="4/6" space={2} backgroundColor={'white'}>
-              <Heading size="sm" numberOfLines={2}>
-                {title}
-              </Heading>
-              <HStack alignItems="center" justifyContent={'space-between'}>
+            <Stack width={'100%'} space={2} backgroundColor={'white'}>
+              <HStack
+                space={3}
+                justifyContent="space-between"
+                alignItems="center">
                 <Text
                   fontSize="12"
                   _light={{
@@ -66,6 +60,31 @@ export const Card = ({title, blog, image, timeStamp, onPress}: CardProps) => {
                   fontWeight="400">
                   {timeStamp}
                 </Text>
+              </HStack>
+              <Heading size="sm" numberOfLines={2} marginBottom={'5px'}>
+                {title}
+              </Heading>
+              <HStack alignItems="center" justifyContent={'space-between'}>
+                <HStack space={1}>
+                  <Badge
+                    colorScheme="violet"
+                    _text={{
+                      fontSize: 10,
+                    }}
+                    rounded="md">
+                    FRONT
+                  </Badge>
+                  <Badge
+                    colorScheme="violet"
+                    _text={{
+                      fontSize: 10,
+                    }}
+                    rounded="md">
+                    DARK
+                  </Badge>
+                </HStack>
+
+                <Views views={100} />
               </HStack>
             </Stack>
           </HStack>

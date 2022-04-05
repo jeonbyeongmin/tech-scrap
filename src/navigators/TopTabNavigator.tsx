@@ -13,8 +13,8 @@ export const TopTabNavigator = () => {
     <>
       <SafeArea />
       <Tab.Navigator tabBar={props => <TabBar {...props} />}>
-        <Tab.Screen name="Tech" component={TechScreen} />
-        <Tab.Screen name="Recruit" component={RecruitPostScreen} />
+        <Tab.Screen name="HOT" component={TechScreen} />
+        <Tab.Screen name="ALL" component={RecruitPostScreen} />
       </Tab.Navigator>
     </>
   );
