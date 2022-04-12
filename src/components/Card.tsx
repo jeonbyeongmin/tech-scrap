@@ -1,19 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Badge, Box, Heading, HStack, Pressable, Stack, Text} from 'native-base';
 import {Views} from './Views';
+import {siteName} from '../common/siteName';
 
 interface CardProps {
   id?: string;
   title: string;
-  category: string;
-  blog: string;
+  category: string[];
+  site: string;
   timeStamp: string;
-  cliked: number;
-  image: string;
+  views: number;
   onPress?: () => void;
 }
 
-export const Card = ({title, blog, timeStamp, onPress}: CardProps) => {
+export const Card = ({
+  title,
+  site,
+  views,
+  category,
+  timeStamp,
+  onPress,
+}: CardProps) => {
+  const [pubDate, setPubDate] = useState('');
+
+  useEffect(() => {
+    const temp = new Date(timeStamp);
+    const year = temp.getFullYear();
+    const month =
+      temp.getMonth() + 1 >= 10
+        ? temp.getMonth() + 1
+        : `0${temp.getMonth() + 1}`;
+
+    const date = temp.getDate() >= 10 ? temp.getDate() : `0${temp.getDate()}`;
+
+    setPubDate(`${year}.${month}.${date}`);
+  }, [pubDate, timeStamp, setPubDate]);
+
   return (
     <Box
       alignItems="center"
@@ -49,7 +71,7 @@ export const Card = ({title, blog, timeStamp, onPress}: CardProps) => {
                     color: 'violet.400',
                   }}
                   fontWeight="500">
-                  {blog}
+                  {siteName[site]}
                 </Text>
                 <Text
                   fontSize="12"
@@ -58,7 +80,7 @@ export const Card = ({title, blog, timeStamp, onPress}: CardProps) => {
                     color: 'warmGray.200',
                   }}
                   fontWeight="400">
-                  {timeStamp}
+                  {pubDate}
                 </Text>
               </HStack>
               <Heading size="sm" numberOfLines={2} marginBottom={'5px'}>
@@ -66,25 +88,22 @@ export const Card = ({title, blog, timeStamp, onPress}: CardProps) => {
               </Heading>
               <HStack alignItems="center" justifyContent={'space-between'}>
                 <HStack space={1}>
-                  <Badge
-                    colorScheme="violet"
-                    _text={{
-                      fontSize: 10,
-                    }}
-                    rounded="md">
-                    FRONT
-                  </Badge>
-                  <Badge
-                    colorScheme="violet"
-                    _text={{
-                      fontSize: 10,
-                    }}
-                    rounded="md">
-                    DARK
-                  </Badge>
+                  {category.map((item, index) => {
+                    return index === 0 || index === 1 ? (
+                      <Badge
+                        key={index}
+                        colorScheme="violet"
+                        _text={{
+                          fontSize: 10,
+                        }}
+                        rounded="md">
+                        {item}
+                      </Badge>
+                    ) : null;
+                  })}
                 </HStack>
 
-                <Views views={100} />
+                <Views views={views} />
               </HStack>
             </Stack>
           </HStack>
