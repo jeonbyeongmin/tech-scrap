@@ -1,8 +1,13 @@
 import React from 'react';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {useColorScheme} from 'react-native';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  DarkTheme,
+} from '@react-navigation/native';
 import {NativeBaseProvider} from 'native-base';
-import {NavigatorContainer} from './navigators/NavigatorContainer';
-// NativeBase 백그라운드 색깔 white로 만들기
+import {StackNavigator} from './navigators/StackNavigator';
+
 const MyTheme = {
   ...DefaultTheme,
   colors: {
@@ -12,10 +17,11 @@ const MyTheme = {
 };
 
 const App = () => {
+  const scheme = useColorScheme();
   return (
     <NativeBaseProvider>
-      <NavigationContainer theme={MyTheme}>
-        <NavigatorContainer />
+      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
+        <StackNavigator />
       </NavigationContainer>
     </NativeBaseProvider>
   );

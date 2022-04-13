@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Badge, Box, Heading, HStack, Pressable, Stack, Text} from 'native-base';
 import {Views} from './Views';
 import {siteName} from '../common/siteName';
+import {useConvertDate} from '../common/useConvertDate';
 
 interface CardProps {
   id?: string;
   title: string;
   category: string[];
   site: string;
-  timeStamp: string;
+  timestamp: string;
   views: number;
   onPress?: () => void;
 }
@@ -18,23 +19,10 @@ export const Card = ({
   site,
   views,
   category,
-  timeStamp,
+  timestamp,
   onPress,
 }: CardProps) => {
-  const [pubDate, setPubDate] = useState('');
-
-  useEffect(() => {
-    const temp = new Date(timeStamp);
-    const year = temp.getFullYear();
-    const month =
-      temp.getMonth() + 1 >= 10
-        ? temp.getMonth() + 1
-        : `0${temp.getMonth() + 1}`;
-
-    const date = temp.getDate() >= 10 ? temp.getDate() : `0${temp.getDate()}`;
-
-    setPubDate(`${year}.${month}.${date}`);
-  }, [pubDate, timeStamp, setPubDate]);
+  const pubDate = useConvertDate(timestamp);
 
   return (
     <Box
