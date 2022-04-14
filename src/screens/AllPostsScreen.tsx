@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Box, FlatList, Spinner} from 'native-base';
 import {Card} from '@components/organisms/Card';
+import {PostNavigationProp} from '@common/types/NavigationType';
 
-export const AllPostsScreen = ({navigation}: any) => {
+export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);

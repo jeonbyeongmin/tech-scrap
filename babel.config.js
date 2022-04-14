@@ -23,6 +23,7 @@ module.exports = {
           '@screens': './src/screens',
           '@images': './src/images',
           '@common': './src/common',
+          '@navigations': './src/navigations',
         },
       },
     ],

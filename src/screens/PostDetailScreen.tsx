@@ -2,8 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {HStack, Spinner} from 'native-base';
 import {WebView} from 'react-native-webview';
 import {siteName} from '../common/utils/siteName';
+import {PostDetailNavigationProp} from '~/common/types/NavigationType';
 
-export const PostDetailScreen = ({route, navigation}: any) => {
+export const PostDetailScreen = ({
+  route,
+  navigation,
+}: PostDetailNavigationProp) => {
   const {url, title} = route.params;
   const [isLoading, setIsLoading] = useState(true);
 

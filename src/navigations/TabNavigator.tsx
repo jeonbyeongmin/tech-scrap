@@ -1,16 +1,18 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {SettingsScreen} from '../screens/SettingsScreen';
-import {NotificationsScreen} from '../screens/NotificationsScreen';
-import {SearchScreen} from '../screens/SearchScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {TopTabNavigator} from './TopTabNavigator';
+import {TopTabNavigator} from '@navigations/TopTabNavigator';
+import {TabParamList} from '@common/types/NavigationType';
+import {SettingsScreen} from '@screens/SettingsScreen';
+import {SearchScreen} from '@screens/SearchScreen';
+import {NotificationsScreen} from '@screens/NotificationsScreen';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 export const TabNavigator = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Post"
       screenOptions={() => ({
         tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'gray',

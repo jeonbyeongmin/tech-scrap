@@ -1,15 +1,17 @@
 import React from 'react';
-import {BackIcon} from '../components/atoms/Icon';
-import {TabNavigator} from './TabNavigator';
 import {createStackNavigator} from '@react-navigation/stack';
-import {SelectBlogScreen} from '../screens/SelectBlogScreen';
-import {PostDetailScreen} from '../screens/PostDetailScreen';
+import {BackIcon} from '@components/atoms/Icon';
+import {TabNavigator} from '@navigations/TabNavigator';
+import {SelectBlogScreen} from '@screens/SelectBlogScreen';
+import {PostDetailScreen} from '@screens/PostDetailScreen';
+import {RootStackParamList} from '@common/types/NavigationType';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
+      initialRouteName="TabNavigator"
       screenOptions={() => ({
         headerStyle: {
           height: 100,
@@ -34,6 +36,7 @@ export const StackNavigator = () => {
       <Stack.Screen
         name="PostDetailScreen"
         component={PostDetailScreen}
+        initialParams={{url: '', title: ''}}
         options={{
           headerLeft: props => <BackIcon onPress={props.onPress} />,
         }}
