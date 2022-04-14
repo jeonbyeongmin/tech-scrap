@@ -2,11 +2,11 @@ import React from 'react';
 import {Box, Button} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-interface BackIconProps {
+interface IBackIcon {
   onPress: (() => void) | undefined;
 }
 
-export const BackIcon = ({onPress}: BackIconProps) => {
+export const BackIcon = ({onPress}: IBackIcon) => {
   return (
     <Box>
       <Button variant="unstyled" onPress={onPress}>

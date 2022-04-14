@@ -1,12 +1,9 @@
+import axios from 'axios';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Box, FlatList, Spinner} from 'native-base';
 import {Card} from '../components/Card';
 
-import axios from 'axios';
-
-// const ITEM_HEIGHT = 93;
-
-export const TechScreen = ({navigation}: any) => {
+export const AllPostsScreen = ({navigation}: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -26,7 +23,6 @@ export const TechScreen = ({navigation}: any) => {
 
       setData([...data, ...response.data.Items]);
       setNextPost(response.data.LastEvaluatedKey);
-      console.log(response.data.Items);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -41,7 +37,6 @@ export const TechScreen = ({navigation}: any) => {
 
       setData(response.data.Items);
       setNextPost(response.data.LastEvaluatedKey);
-      console.log(response.data.Items);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -79,7 +74,7 @@ export const TechScreen = ({navigation}: any) => {
       <Card
         title={item.Title}
         site={item.Site}
-        timeStamp={item.Timestamp}
+        timestamp={item.Timestamp}
         category={item.Category}
         views={item.Views}
         onPress={() =>
@@ -93,15 +88,6 @@ export const TechScreen = ({navigation}: any) => {
     [navigation],
   );
 
-  // const getItemLayout = useCallback(
-  //   (_, index) => ({
-  //     length: ITEM_HEIGHT,
-  //     offset: ITEM_HEIGHT * index,
-  //     index,
-  //   }),
-  //   [],
-  // );
-
   const keyExtractor = useCallback(item => item.PostId, []);
 
   return (
@@ -110,11 +96,8 @@ export const TechScreen = ({navigation}: any) => {
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
-        // getItemLayout={getItemLayout}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        // initialNumToRender={6}
-        // maxToRenderPerBatch={6}
         disableVirtualization={false}
         removeClippedSubviews={true}
         windowSize={12}

@@ -1,10 +1,6 @@
 import {useEffect, useState} from 'react';
 
-interface useConvertDatePropsType {
-  timestamp: string;
-}
-
-export const useConvertDate = ({timestamp}: useConvertDatePropsType) => {
+export const useConvertDate = (timestamp: string) => {
   const [pubDate, setPubDate] = useState('');
 
   useEffect(() => {

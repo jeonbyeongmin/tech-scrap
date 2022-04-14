@@ -1,8 +1,7 @@
-import React, {useCallback} from 'react';
-import {Box, FlatList} from 'native-base';
-import {Card} from '../components/Card';
+import React from 'react';
+import {Box} from 'native-base';
 
-export const NotificationsScreen = ({navigation}: any) => {
+export const NotificationsScreen = () => {
   return (
     <Box>
       {/* <FlatList

@@ -1,8 +1,8 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {TabNavigator} from './TabNavigator';
-import {SelectBlogScreen} from '../screens/SelectBlogScreen';
 import {BackIcon} from '../components/BackIcon';
+import {TabNavigator} from './TabNavigator';
+import {createStackNavigator} from '@react-navigation/stack';
+import {SelectBlogScreen} from '../screens/SelectBlogScreen';
 import {PostDetailScreen} from '../screens/PostDetailScreen';
 
 const Stack = createStackNavigator();

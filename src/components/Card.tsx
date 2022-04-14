@@ -1,8 +1,8 @@
 import React from 'react';
 import {Badge, Box, Heading, HStack, Pressable, Stack, Text} from 'native-base';
 import {Views} from './Views';
-import {siteName} from '../common/siteName';
-import {useConvertDate} from '../common/useConvertDate';
+import {siteName} from '../common/utils/siteName';
+import {useConvertDate} from '../common/hooks/useConvertDate';
 
 interface CardProps {
   id?: string;
@@ -25,49 +25,19 @@ export const Card = ({
   const pubDate = useConvertDate(timestamp);
 
   return (
-    <Box
-      alignItems="center"
-      backgroundColor={'white'}
-      paddingX={'20px'}
-      paddingY={4}
-      width={'100%'}>
+    <Box alignItems="center" paddingX={'20px'} paddingY={4} width={'100%'}>
       <Pressable onPress={onPress}>
-        <Box
-          overflow="hidden"
-          borderColor="coolGray.200"
-          _dark={{
-            borderColor: 'coolGray.600',
-            backgroundColor: 'gray.700',
-          }}
-          _web={{
-            shadow: 2,
-            borderWidth: 0,
-          }}
-          _light={{}}>
+        <Box overflow="hidden" borderColor="coolGray.200">
           <HStack space={2}>
             <Stack width={'100%'} space={2} backgroundColor={'white'}>
               <HStack
                 space={3}
                 justifyContent="space-between"
                 alignItems="center">
-                <Text
-                  fontSize="12"
-                  _light={{
-                    color: 'violet.500',
-                  }}
-                  _dark={{
-                    color: 'violet.400',
-                  }}
-                  fontWeight="500">
+                <Text fontSize="12" color="violet.500" fontWeight="500">
                   {siteName[site]}
                 </Text>
-                <Text
-                  fontSize="12"
-                  color="coolGray.600"
-                  _dark={{
-                    color: 'warmGray.200',
-                  }}
-                  fontWeight="400">
+                <Text fontSize="12" color="coolGray.600" fontWeight="400">
                   {pubDate}
                 </Text>
               </HStack>

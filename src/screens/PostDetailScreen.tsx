@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {HStack, Spinner} from 'native-base';
 import {WebView} from 'react-native-webview';
-import {siteName} from '../common/siteName';
+import {siteName} from '../common/utils/siteName';
 
 export const PostDetailScreen = ({route, navigation}: any) => {
   const {url, title} = route.params;

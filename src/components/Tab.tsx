@@ -9,18 +9,6 @@ interface ITab {
   setWidth: (params: number) => void;
 }
 
-const TabButton = styled.TouchableOpacity<{isFocused: boolean}>`
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  margin: 0px 16px;
-`;
-
-const TabText = styled.Text<{isFocused: boolean}>`
-  font-weight: 800;
-  color: ${props => (props.isFocused ? 'black' : '#bebebe')};
-`;
-
 export const Tab = ({
   isFocused,
   label,
@@ -48,3 +36,15 @@ export const Tab = ({
     </TabButton>
   );
 };
+
+const TabButton = styled.TouchableOpacity<{isFocused: boolean}>`
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin: 0px 16px;
+`;
+
+const TabText = styled.Text<{isFocused: boolean}>`
+  font-weight: 800;
+  color: ${props => (props.isFocused ? 'black' : '#bebebe')};
+`;
