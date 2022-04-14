@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useCallback, useEffect, useState} from 'react';
 import {Box, FlatList, Spinner} from 'native-base';
-import {Card} from '../components/Card';
+import {Card} from '@components/organisms/Card';
 
 export const AllPostsScreen = ({navigation}: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -104,7 +104,7 @@ export const AllPostsScreen = ({navigation}: any) => {
         onRefresh={onRefresh}
         refreshing={refreshing}
         onEndReached={onEndReached}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.5}
         ListFooterComponent={
           <Spinner color="black.500" size={'sm'} margin="20px" />
         }

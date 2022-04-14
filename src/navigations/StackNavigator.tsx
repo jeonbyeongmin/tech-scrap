@@ -1,5 +1,5 @@
 import React from 'react';
-import {BackIcon} from '../components/BackIcon';
+import {BackIcon} from '../components/atoms/Icon';
 import {TabNavigator} from './TabNavigator';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SelectBlogScreen} from '../screens/SelectBlogScreen';

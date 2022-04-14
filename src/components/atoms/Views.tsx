@@ -1,15 +1,15 @@
 import React from 'react';
 import {HStack, Text} from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ViewsIcon} from '@components/atoms/Icon';
 
-interface ViewsProps {
+interface IViews {
   views: number;
 }
 
-export const Views = ({views}: ViewsProps) => {
+export const Views = ({views}: IViews) => {
   return (
     <HStack space={1} alignItems="center">
-      <Ionicons name="eye" size={14} />
+      <ViewsIcon />
       <Text fontSize="12" color="coolGray.600">
         {views}
       </Text>

@@ -6,7 +6,7 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {NativeBaseProvider} from 'native-base';
-import {StackNavigator} from './navigators/StackNavigator';
+import {StackNavigator} from './navigations/StackNavigator';
 
 const MyTheme = {
   ...DefaultTheme,

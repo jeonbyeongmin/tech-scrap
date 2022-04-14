@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {SearchIcon} from '@components/atoms/Icon';
 
 export const SearchBar = () => {
   const [value, setValue] = useState('');
 
   return (
     <SearchBarWrapper>
-      <Ionicons name="search-outline" size={25} />
+      <SearchIcon />
       <SearchInput
         autoCapitalize="none"
         autoCorrect={false}

@@ -1,13 +1,13 @@
-import {Box, Button, HStack, Image} from 'native-base';
+import {Box, HStack, Image} from 'native-base';
 import React from 'react';
-import logo from '../images/scrap.png';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import logo from '@images/scrap.png';
+import {OptionIcon} from '@components/atoms/Icon';
 
-interface HeaderProps {
+interface IHeader {
   onPress: () => void;
 }
 
-export const Header = ({onPress}: HeaderProps) => {
+export const Header = ({onPress}: IHeader) => {
   return (
     <Box>
       <HStack
@@ -21,9 +21,7 @@ export const Header = ({onPress}: HeaderProps) => {
           width="1/4"
           height="auto"
         />
-        <Button onPress={onPress} variant="unstyled">
-          <Ionicons name="options-outline" size={25} />
-        </Button>
+        <OptionIcon onPress={onPress} />
       </HStack>
     </Box>
   );

@@ -2,8 +2,8 @@ import React from 'react';
 import {SafeAreaView} from 'react-native';
 import styled from 'styled-components/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {TabBar} from '../components/TabBar';
-import {AllPostsScreen} from '../screens/AllPostsScreen';
+import {TabBar} from '@components/organisms/TabBar';
+import {AllPostsScreen} from '@screens/AllPostsScreen';
 
 const Tab = createMaterialTopTabNavigator();
 

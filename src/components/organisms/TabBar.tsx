@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {MaterialTopTabBarProps} from '@react-navigation/material-top-tabs';
-import {Header} from './Header';
 import {Animated} from 'react-native';
-import {Tab} from './Tab';
+import {Header} from '@components/molecules/Header';
+import {Tab} from '@components/molecules/Tab';
 
 interface Route {
   key: string;
