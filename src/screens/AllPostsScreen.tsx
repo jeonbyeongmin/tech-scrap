@@ -3,6 +3,7 @@ import {Box, FlatList, HStack, Spinner} from 'native-base';
 import {Card} from '@components/organisms/Card';
 import {PostNavigationProp} from '@common/types/NavigationType';
 import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
+import {Post, PostItem} from '@common/types/Post';
 
 export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const {
@@ -16,7 +17,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   } = useGetPostsQuery();
 
   const renderItem = useCallback(
-    ({item}) => (
+    ({item}: PostItem) => (
       <Card
         title={item.Title}
         site={item.Site}
@@ -34,7 +35,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     [navigation],
   );
 
-  const keyExtractor = useCallback(item => item.PostId, []);
+  const keyExtractor = useCallback((item: Post) => item.PostId, []);
 
   if (isLoading) {
     return (

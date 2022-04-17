@@ -9,7 +9,7 @@ interface ICard {
   title: string;
   category: string[];
   site: string;
-  timestamp: string;
+  timestamp: Date;
   views: number;
   onPress?: () => void;
 }

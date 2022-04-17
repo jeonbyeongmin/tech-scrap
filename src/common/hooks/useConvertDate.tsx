@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 
-export const useConvertDate = (timestamp: string) => {
+export const useConvertDate = (timestamp: Date) => {
   const [pubDate, setPubDate] = useState('');
 
   useEffect(() => {
