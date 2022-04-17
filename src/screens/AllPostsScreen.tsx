@@ -1,9 +1,10 @@
 import React, {useCallback} from 'react';
-import {Box, FlatList, HStack, Spinner} from 'native-base';
+import {Box, FlatList, Spinner} from 'native-base';
 import {Card} from '@components/organisms/Card';
 import {PostNavigationProp} from '@common/types/NavigationType';
 import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 import {Post, PostItem} from '@common/types/Post';
+import {CustomSpinner} from '@components/atoms/CustomSpinner';
 
 export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const {
@@ -38,18 +39,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const keyExtractor = useCallback((item: Post) => item.PostId, []);
 
   if (isLoading) {
-    return (
-      <HStack
-        position={'absolute'}
-        left={0}
-        right={0}
-        top={0}
-        bottom={20}
-        alignContent={'center'}
-        justifyContent="center">
-        <Spinner color="black.500" size={'lg'} />
-      </HStack>
-    );
+    return <CustomSpinner />;
   }
 
   if (isError) {
@@ -74,7 +64,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
             fetchNextPage();
           }
         }}
-        onEndReachedThreshold={0.01}
+        onEndReachedThreshold={0.1}
         ListFooterComponent={
           <Spinner color="black.500" size={'sm'} margin="20px" />
         }

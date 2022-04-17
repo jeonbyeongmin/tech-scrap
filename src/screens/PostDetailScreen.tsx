@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {HStack, Spinner} from 'native-base';
 import {WebView} from 'react-native-webview';
-import {siteName} from '../common/utils/siteName';
-import {PostDetailNavigationProp} from '~/common/types/NavigationType';
+import {siteName} from '@common/utils/siteName';
+import {PostDetailNavigationProp} from '@common/types/NavigationType';
+import {CustomSpinner} from '@components/atoms/CustomSpinner';
 
 export const PostDetailScreen = ({
   route,
@@ -23,19 +23,8 @@ export const PostDetailScreen = ({
 
   return (
     <>
-      <WebView onLoad={() => handleOnLoad()} source={{uri: url}} />
-      {isLoading && (
-        <HStack
-          position={'absolute'}
-          left={0}
-          right={0}
-          top={0}
-          bottom={20}
-          alignContent={'center'}
-          justifyContent="center">
-          <Spinner color="black.500" size={'lg'} />
-        </HStack>
-      )}
+      <WebView onLoad={handleOnLoad} source={{uri: url}} />
+      {isLoading && <CustomSpinner />}
     </>
   );
 };
