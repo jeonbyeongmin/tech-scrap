@@ -1,12 +1,13 @@
 import React from 'react';
-import {useColorScheme} from 'react-native';
 import {
   DefaultTheme,
   NavigationContainer,
   DarkTheme,
 } from '@react-navigation/native';
+import {useColorScheme} from 'react-native';
 import {NativeBaseProvider} from 'native-base';
 import {StackNavigator} from './navigations/StackNavigator';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 const MyTheme = {
   ...DefaultTheme,
@@ -16,14 +17,18 @@ const MyTheme = {
   },
 };
 
+const queryClient = new QueryClient();
+
 const App = () => {
   const scheme = useColorScheme();
   return (
-    <NativeBaseProvider>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
-        <StackNavigator />
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <QueryClientProvider client={queryClient}>
+      <NativeBaseProvider>
+        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
+          <StackNavigator />
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </QueryClientProvider>
   );
 };
 

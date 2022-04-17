@@ -1,74 +1,19 @@
-import axios from 'axios';
-import React, {useCallback, useEffect, useState} from 'react';
-import {Box, FlatList, Spinner} from 'native-base';
+import React, {useCallback} from 'react';
+import {Box, FlatList, HStack, Spinner} from 'native-base';
 import {Card} from '@components/organisms/Card';
 import {PostNavigationProp} from '@common/types/NavigationType';
+import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 
 export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
-  const [nextPost, setNextPost] = useState({});
-
-  async function getNextPosts() {
-    try {
-      const response = await axios.get(
-        'https://wpuj5bfss4.execute-api.ap-northeast-2.amazonaws.com/dev/post/',
-        {
-          params: {
-            postId: nextPost.PostId,
-            type: nextPost.Type,
-          },
-        },
-      );
-
-      setData([...data, ...response.data.Items]);
-      setNextPost(response.data.LastEvaluatedKey);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function getPosts() {
-    try {
-      const response = await axios.get(
-        'https://wpuj5bfss4.execute-api.ap-northeast-2.amazonaws.com/dev/post/',
-      );
-
-      setData(response.data.Items);
-      setNextPost(response.data.LastEvaluatedKey);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getRefreshData = async () => {
-    setRefreshing(true);
-    await getPosts();
-    setRefreshing(false);
-  };
-
-  useEffect(() => {
-    async function fetchPostData() {
-      await getPosts();
-    }
-
-    fetchPostData();
-  }, []);
-
-  const onEndReached = () => {
-    if (!isLoading) {
-      getNextPosts();
-    }
-  };
-
-  const onRefresh = async () => {
-    if (!refreshing) {
-      getRefreshData();
-    }
-  };
+  const {
+    isLoading,
+    isError,
+    data,
+    hasNextPage,
+    refetch,
+    isRefetching,
+    fetchNextPage,
+  } = useGetPostsQuery();
 
   const renderItem = useCallback(
     ({item}) => (
@@ -91,10 +36,29 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
 
   const keyExtractor = useCallback(item => item.PostId, []);
 
+  if (isLoading) {
+    return (
+      <HStack
+        position={'absolute'}
+        left={0}
+        right={0}
+        top={0}
+        bottom={20}
+        alignContent={'center'}
+        justifyContent="center">
+        <Spinner color="black.500" size={'lg'} />
+      </HStack>
+    );
+  }
+
+  if (isError) {
+    return <Box>Error</Box>;
+  }
+
   return (
     <Box>
       <FlatList
-        data={data}
+        data={data?.pages.map(page => page.result).flat()}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
@@ -102,10 +66,14 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
         disableVirtualization={false}
         removeClippedSubviews={true}
         windowSize={12}
-        onRefresh={onRefresh}
-        refreshing={refreshing}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.5}
+        onRefresh={refetch}
+        refreshing={isRefetching}
+        onEndReached={() => {
+          if (hasNextPage) {
+            fetchNextPage();
+          }
+        }}
+        onEndReachedThreshold={0.01}
         ListFooterComponent={
           <Spinner color="black.500" size={'sm'} margin="20px" />
         }
