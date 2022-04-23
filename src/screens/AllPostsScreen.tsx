@@ -1,12 +1,12 @@
 import React, {useCallback} from 'react';
-import {Box, HStack, Pressable, Spinner, Text, VStack} from 'native-base';
+import {Box, HStack, Pressable, Spinner, VStack} from 'native-base';
 import {Card} from '@components/organisms/Card';
 import {PostNavigationProp} from '@common/types/NavigationType';
 import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 import {Post, PostItem} from '@common/types/Post';
 import {CustomSpinner} from '@components/atoms/CustomSpinner';
+import {BookmarkIcon} from '@components/atoms/Icon';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {BookmarkIcon} from '~/components/atoms/Icon';
 
 export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const {
