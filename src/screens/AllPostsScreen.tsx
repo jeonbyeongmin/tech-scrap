@@ -1,12 +1,13 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Box, HStack, Pressable, Spinner, VStack} from 'native-base';
 import {Card} from '@components/organisms/Card';
 import {PostNavigationProp} from '@common/types/NavigationType';
 import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 import {Post, PostItem} from '@common/types/Post';
 import {CustomSpinner} from '@components/atoms/CustomSpinner';
-import {BookmarkIcon} from '@components/atoms/Icon';
+import {BookmarkIcon, BookmarkOutlineIcon} from '@components/atoms/Icon';
 import {SwipeListView} from 'react-native-swipe-list-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const {
@@ -19,9 +20,39 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     fetchNextPage,
   } = useGetPostsQuery();
 
-  const closeRow = (rowMap: any, rowKey: string) => {
-    if (rowMap[rowKey]) {
-      rowMap[rowKey].closeRow();
+  const [scrapItem, setScrapItem] = useState<Post[]>();
+
+  useEffect(() => {
+    async function fetchScrapItem() {
+      try {
+        const jsonValue = await AsyncStorage.getItem('@scrap_item');
+        const value = jsonValue != null ? JSON.parse(jsonValue) : null;
+        setScrapItem(value);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchScrapItem();
+  }, []);
+
+  const handleClickBookmark = async (rowMap: any, item: Post) => {
+    if (scrapItem) {
+      // 배열에 이미 존재하면 찾아서 없애고, 없다면 넣기
+      const newScrapItems = scrapItem?.find(
+        element => element.PostId === item.PostId,
+      )
+        ? scrapItem.filter(element => element.PostId !== item.PostId)
+        : [...scrapItem, item];
+
+      setScrapItem(newScrapItems);
+      await AsyncStorage.setItem('@scrap_item', JSON.stringify(newScrapItems));
+    } else {
+      const jsonValue = JSON.stringify([item]);
+      await AsyncStorage.setItem('@scrap_item', jsonValue);
+    }
+
+    if (rowMap[item.PostId]) {
+      rowMap[item.PostId].closeRow();
     }
   };
 
@@ -48,7 +79,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const renderHiddenItem = ({item}: PostItem, rowMap: any) => (
     <HStack flex="1" pl="2">
       <Pressable
-        onPress={() => closeRow(rowMap, item.PostId)}
+        onPress={() => handleClickBookmark(rowMap, item)}
         w="75"
         ml="auto"
         justifyContent="center"
@@ -56,7 +87,11 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
           opacity: 0.5,
         }}>
         <VStack alignItems="center" space={2}>
-          <BookmarkIcon />
+          {scrapItem?.find(element => element.PostId === item.PostId) ? (
+            <BookmarkIcon />
+          ) : (
+            <BookmarkOutlineIcon />
+          )}
         </VStack>
       </Pressable>
     </HStack>

@@ -30,6 +30,10 @@ export const ViewsIcon = () => {
   return <Ionicons name="eye" size={14} />;
 };
 
-export const BookmarkIcon = () => {
+export const BookmarkOutlineIcon = () => {
   return <Ionicons name="bookmark-outline" size={20} />;
+};
+
+export const BookmarkIcon = () => {
+  return <Ionicons name="bookmark" size={20} />;
 };
