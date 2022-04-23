@@ -4,7 +4,7 @@ import {siteName} from '@common/utils/siteName';
 import {useConvertDate} from '@common/hooks/useConvertDate';
 import {Tag} from '@components/atoms/Tag';
 import {Views} from '@components/atoms/Views';
-import defaultImg from '../../images/defaultImg.png';
+import defaultImg from '@images/defaultImg.png';
 
 interface ICard {
   title: string;

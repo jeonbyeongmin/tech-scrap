@@ -11,7 +11,11 @@ export const TopTabNavigator = () => {
   return (
     <>
       <SafeArea />
-      <Tab.Navigator tabBar={props => <TabBar {...props} />}>
+      <Tab.Navigator
+        screenOptions={() => ({
+          swipeEnabled: false,
+        })}
+        tabBar={props => <TabBar {...props} />}>
         <Tab.Screen name="ALL" component={AllPostsScreen} />
       </Tab.Navigator>
     </>

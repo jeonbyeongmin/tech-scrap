@@ -29,3 +29,7 @@ export const SearchIcon = () => {
 export const ViewsIcon = () => {
   return <Ionicons name="eye" size={14} />;
 };
+
+export const BookmarkIcon = () => {
+  return <Ionicons name="bookmark-outline" size={20} />;
+};

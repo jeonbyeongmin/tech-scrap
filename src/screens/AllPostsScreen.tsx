@@ -1,10 +1,12 @@
 import React, {useCallback} from 'react';
-import {Box, FlatList, Spinner} from 'native-base';
+import {Box, HStack, Pressable, Spinner, Text, VStack} from 'native-base';
 import {Card} from '@components/organisms/Card';
 import {PostNavigationProp} from '@common/types/NavigationType';
 import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 import {Post, PostItem} from '@common/types/Post';
 import {CustomSpinner} from '@components/atoms/CustomSpinner';
+import {SwipeListView} from 'react-native-swipe-list-view';
+import {BookmarkIcon} from '~/components/atoms/Icon';
 
 export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const {
@@ -16,6 +18,12 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     isRefetching,
     fetchNextPage,
   } = useGetPostsQuery();
+
+  const closeRow = (rowMap: any, rowKey: string) => {
+    if (rowMap[rowKey]) {
+      rowMap[rowKey].closeRow();
+    }
+  };
 
   const renderItem = useCallback(
     ({item}: PostItem) => (
@@ -37,6 +45,23 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     [navigation],
   );
 
+  const renderHiddenItem = ({item}: PostItem, rowMap: any) => (
+    <HStack flex="1" pl="2">
+      <Pressable
+        onPress={() => closeRow(rowMap, item.PostId)}
+        w="75"
+        ml="auto"
+        justifyContent="center"
+        _pressed={{
+          opacity: 0.5,
+        }}>
+        <VStack alignItems="center" space={2}>
+          <BookmarkIcon />
+        </VStack>
+      </Pressable>
+    </HStack>
+  );
+
   const keyExtractor = useCallback((item: Post) => item.PostId, []);
 
   if (isLoading) {
@@ -49,9 +74,10 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
 
   return (
     <Box>
-      <FlatList
+      <SwipeListView
         data={data?.pages.map(page => page.result).flat()}
         renderItem={renderItem}
+        renderHiddenItem={renderHiddenItem}
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
@@ -70,6 +96,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
         ListFooterComponent={
           <Spinner color="black.500" size={'sm'} margin="20px" />
         }
+        rightOpenValue={-80}
       />
     </Box>
   );

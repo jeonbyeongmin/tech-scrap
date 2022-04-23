@@ -1,4 +1,4 @@
-import {Badge} from 'native-base';
+import {Badge, Text} from 'native-base';
 import React from 'react';
 
 interface ITag {
@@ -12,8 +12,12 @@ export const Tag = ({item}: ITag) => {
       _text={{
         fontSize: 10,
       }}
-      rounded="md">
-      {item}
+      rounded="md"
+      maxWidth={'80px'}
+      textOverflow="revert">
+      <Text numberOfLines={1} color="violet.600" fontSize={'10px'}>
+        {item}
+      </Text>
     </Badge>
   );
 };
