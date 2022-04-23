@@ -7,6 +7,7 @@ export interface Post {
   Title: string;
   Type: string;
   Views: number;
+  ImageUrl: string;
 }
 
 export interface PostItem {

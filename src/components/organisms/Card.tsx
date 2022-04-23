@@ -1,9 +1,10 @@
 import React from 'react';
-import {Box, Heading, HStack, Pressable, Stack, Text} from 'native-base';
+import {Box, Heading, HStack, Image, Pressable, Stack, Text} from 'native-base';
 import {siteName} from '@common/utils/siteName';
 import {useConvertDate} from '@common/hooks/useConvertDate';
 import {Tag} from '@components/atoms/Tag';
 import {Views} from '@components/atoms/Views';
+import defaultImg from '../../images/defaultImg.png';
 
 interface ICard {
   title: string;
@@ -11,6 +12,7 @@ interface ICard {
   site: string;
   timestamp: Date;
   views: number;
+  imageUrl: string;
   onPress?: () => void;
 }
 
@@ -20,6 +22,7 @@ export const Card = ({
   views,
   category,
   timestamp,
+  imageUrl,
   onPress,
 }: ICard) => {
   const pubDate = useConvertDate(timestamp);
@@ -30,8 +33,16 @@ export const Card = ({
         {({isPressed}) => {
           return (
             <Box overflow="hidden" bg={isPressed ? 'coolGray.100' : 'white'}>
-              <HStack space={2} paddingX={'20px'} paddingY={4}>
-                <Stack width={'100%'} space={2}>
+              <HStack space={4} paddingX={'20px'} paddingY={4}>
+                <Image
+                  source={{uri: imageUrl}}
+                  alt="image"
+                  defaultSource={defaultImg}
+                  resizeMode="cover"
+                  width={'30%'}
+                  rounded="md"
+                />
+                <Stack space={2} width="66%">
                   <HStack
                     space={3}
                     justifyContent="space-between"

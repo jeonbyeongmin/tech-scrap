@@ -25,6 +25,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
         timestamp={item.Timestamp}
         category={item.Category}
         views={item.Views}
+        imageUrl={item.ImageUrl}
         onPress={() =>
           navigation.navigate('PostDetailScreen', {
             url: item.SiteUrl,
@@ -56,7 +57,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
         showsVerticalScrollIndicator={false}
         disableVirtualization={false}
         removeClippedSubviews={true}
-        windowSize={12}
+        windowSize={15}
         onRefresh={refetch}
         refreshing={isRefetching}
         onEndReached={() => {
@@ -65,6 +66,7 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
           }
         }}
         onEndReachedThreshold={0.1}
+        maxToRenderPerBatch={8}
         ListFooterComponent={
           <Spinner color="black.500" size={'sm'} margin="20px" />
         }

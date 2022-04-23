@@ -4,7 +4,7 @@ import {useInfiniteQuery} from 'react-query';
 export const useGetPostsQuery = () => {
   const fetchPosts = async ({pageParam = {PostId: '', Type: ''}}) => {
     const response = await axios.get(
-      'https://wpuj5bfss4.execute-api.ap-northeast-2.amazonaws.com/dev/post/',
+      'https://n0yd13qpbc.execute-api.ap-northeast-2.amazonaws.com/dev/post',
       {
         params: {
           postId: pageParam.PostId,
