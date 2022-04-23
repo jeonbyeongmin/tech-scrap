@@ -25,8 +25,8 @@ const SearchBarWrapper = styled.View`
   flex-direction: row;
   align-items: center;
   background-color: #efefef;
-  border-radius: 4px;
-  padding: 10px 14px 10px 12px;
+  border-radius: 10px;
+  padding: 10px 16px 10px 16px;
   margin: 20px 20px;
   display: flex;
 `;

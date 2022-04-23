@@ -32,10 +32,15 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
         console.log(e);
       }
     }
+
     fetchScrapItem();
   }, []);
 
   const handleClickBookmark = async (rowMap: any, item: Post) => {
+    if (rowMap[item.PostId]) {
+      rowMap[item.PostId].closeRow();
+    }
+
     if (scrapItem) {
       // 배열에 이미 존재하면 찾아서 없애고, 없다면 넣기
       const newScrapItems = scrapItem?.find(
@@ -49,10 +54,6 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     } else {
       const jsonValue = JSON.stringify([item]);
       await AsyncStorage.setItem('@scrap_item', jsonValue);
-    }
-
-    if (rowMap[item.PostId]) {
-      rowMap[item.PostId].closeRow();
     }
   };
 
