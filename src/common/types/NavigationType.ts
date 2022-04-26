@@ -9,7 +9,7 @@ export type RootStackParamList = {
 export type TabParamList = {
   Post: undefined;
   Search: undefined;
-  Notification: undefined;
+  Scrap: undefined;
   Setting: undefined;
 };
 

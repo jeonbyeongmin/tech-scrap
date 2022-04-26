@@ -1,13 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {Box, HStack, Pressable, Spinner, VStack} from 'native-base';
-import {Card} from '@components/organisms/Card';
-import {PostNavigationProp} from '@common/types/NavigationType';
-import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
-import {Post, PostItem} from '@common/types/Post';
-import {CustomSpinner} from '@components/atoms/CustomSpinner';
-import {BookmarkIcon, BookmarkOutlineIcon} from '@components/atoms/Icon';
-import {SwipeListView} from 'react-native-swipe-list-view';
+import React, {useCallback} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Box, HStack, Pressable, Spinner, VStack} from 'native-base';
+import {SwipeListView} from 'react-native-swipe-list-view';
+import {Post, PostItem} from '@common/types/Post';
+import {PostNavigationProp} from '@common/types/NavigationType';
+import {useAsyncStorageQuery} from '~/common/hooks/useAsyncStorageQuery';
+import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
+import {BookmarkIcon, BookmarkOutlineIcon} from '@components/atoms/Icon';
+import {CustomSpinner} from '@components/atoms/CustomSpinner';
+import {Card} from '@components/organisms/Card';
 
 export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   const {
@@ -20,42 +21,34 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     fetchNextPage,
   } = useGetPostsQuery();
 
-  const [scrapItem, setScrapItem] = useState<Post[]>();
+  const {data: scrapItems, setData: setScrapItems} =
+    useAsyncStorageQuery<Post>('@scrap_item');
 
-  useEffect(() => {
-    async function fetchScrapItem() {
-      try {
-        const jsonValue = await AsyncStorage.getItem('@scrap_item');
-        const value = jsonValue != null ? JSON.parse(jsonValue) : null;
-        setScrapItem(value);
-      } catch (e) {
-        console.log(e);
+  const handleScrapPost = useCallback(
+    async (rowMap: any, item: Post) => {
+      if (rowMap[item.PostId]) {
+        rowMap[item.PostId].closeRow();
       }
-    }
 
-    fetchScrapItem();
-  }, []);
+      if (scrapItems) {
+        const newScrapItems = scrapItems?.find(
+          element => element.PostId === item.PostId,
+        )
+          ? scrapItems.filter(element => element.PostId !== item.PostId)
+          : [...scrapItems, item];
 
-  const handleClickBookmark = async (rowMap: any, item: Post) => {
-    if (rowMap[item.PostId]) {
-      rowMap[item.PostId].closeRow();
-    }
-
-    if (scrapItem) {
-      // 배열에 이미 존재하면 찾아서 없애고, 없다면 넣기
-      const newScrapItems = scrapItem?.find(
-        element => element.PostId === item.PostId,
-      )
-        ? scrapItem.filter(element => element.PostId !== item.PostId)
-        : [...scrapItem, item];
-
-      setScrapItem(newScrapItems);
-      await AsyncStorage.setItem('@scrap_item', JSON.stringify(newScrapItems));
-    } else {
-      const jsonValue = JSON.stringify([item]);
-      await AsyncStorage.setItem('@scrap_item', jsonValue);
-    }
-  };
+        setScrapItems(newScrapItems);
+        await AsyncStorage.setItem(
+          '@scrap_item',
+          JSON.stringify(newScrapItems),
+        );
+      } else {
+        const jsonValue = JSON.stringify([item]);
+        await AsyncStorage.setItem('@scrap_item', jsonValue);
+      }
+    },
+    [scrapItems, setScrapItems],
+  );
 
   const renderItem = useCallback(
     ({item}: PostItem) => (
@@ -77,25 +70,28 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     [navigation],
   );
 
-  const renderHiddenItem = ({item}: PostItem, rowMap: any) => (
-    <HStack flex="1" pl="2">
-      <Pressable
-        onPress={() => handleClickBookmark(rowMap, item)}
-        w="75"
-        ml="auto"
-        justifyContent="center"
-        _pressed={{
-          opacity: 0.5,
-        }}>
-        <VStack alignItems="center" space={2}>
-          {scrapItem?.find(element => element.PostId === item.PostId) ? (
-            <BookmarkIcon />
-          ) : (
-            <BookmarkOutlineIcon />
-          )}
-        </VStack>
-      </Pressable>
-    </HStack>
+  const renderHiddenItem = useCallback(
+    ({item}: PostItem, rowMap: any) => (
+      <HStack flex="1" pl="2">
+        <Pressable
+          onPress={() => handleScrapPost(rowMap, item)}
+          w="75"
+          ml="auto"
+          justifyContent="center"
+          _pressed={{
+            opacity: 0.5,
+          }}>
+          <VStack alignItems="center" space={2}>
+            {scrapItems?.find(element => element.PostId === item.PostId) ? (
+              <BookmarkIcon />
+            ) : (
+              <BookmarkOutlineIcon />
+            )}
+          </VStack>
+        </Pressable>
+      </HStack>
+    ),
+    [handleScrapPost, scrapItems],
   );
 
   const keyExtractor = useCallback((item: Post) => item.PostId, []);

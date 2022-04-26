@@ -5,7 +5,7 @@ import {TopTabNavigator} from '@navigations/TopTabNavigator';
 import {TabParamList} from '@common/types/NavigationType';
 import {SettingsScreen} from '@screens/SettingsScreen';
 import {SearchScreen} from '@screens/SearchScreen';
-import {NotificationsScreen} from '@screens/NotificationsScreen';
+import {ScrapScreen} from '~/screens/ScrapScreen';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -35,6 +35,16 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen
+        name="Scrap"
+        component={ScrapScreen}
+        options={{
+          title: '스크랩',
+          tabBarIcon: ({color, size}) => (
+            <Ionicons name="bookmarks-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="Search"
         component={SearchScreen}
         options={{
@@ -42,16 +52,6 @@ export const TabNavigator = () => {
           title: '검색',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="search-outline" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Notification"
-        component={NotificationsScreen}
-        options={{
-          title: '알림',
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="notifications-outline" color={color} size={size} />
           ),
         }}
       />
