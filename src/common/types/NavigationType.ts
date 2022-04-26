@@ -13,7 +13,7 @@ export type TabParamList = {
   Setting: undefined;
 };
 
-export type PostNavigationProp = NativeStackScreenProps<
+export type TabNavigationProp = NativeStackScreenProps<
   RootStackParamList,
   'TabNavigator'
 >;

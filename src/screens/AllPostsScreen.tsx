@@ -3,14 +3,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Box, HStack, Pressable, Spinner, VStack} from 'native-base';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {Post, PostItem} from '@common/types/Post';
-import {PostNavigationProp} from '@common/types/NavigationType';
+import {TabNavigationProp} from '@common/types/NavigationType';
 import {useAsyncStorageQuery} from '~/common/hooks/useAsyncStorageQuery';
 import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 import {BookmarkIcon, BookmarkOutlineIcon} from '@components/atoms/Icon';
 import {CustomSpinner} from '@components/atoms/CustomSpinner';
 import {Card} from '@components/organisms/Card';
 
-export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
+export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
   const {
     isLoading,
     isError,
@@ -94,8 +94,6 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
     [handleScrapPost, scrapItems],
   );
 
-  const keyExtractor = useCallback((item: Post) => item.PostId, []);
-
   if (isLoading) {
     return <CustomSpinner />;
   }
@@ -105,17 +103,12 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
   }
 
   return (
-    <Box>
+    <Box height={'100%'}>
       <SwipeListView
         data={data?.pages.map(page => page.result).flat()}
+        keyExtractor={(item: Post) => item.PostId}
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}
-        keyExtractor={keyExtractor}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        disableVirtualization={false}
-        removeClippedSubviews={true}
-        windowSize={15}
         onRefresh={refetch}
         refreshing={isRefetching}
         onEndReached={() => {
@@ -124,11 +117,16 @@ export const AllPostsScreen = ({navigation}: PostNavigationProp) => {
           }
         }}
         onEndReachedThreshold={0.1}
-        maxToRenderPerBatch={8}
         ListFooterComponent={
           <Spinner color="black.500" size={'sm'} margin="20px" />
         }
+        maxToRenderPerBatch={8}
+        windowSize={15}
         rightOpenValue={-80}
+        removeClippedSubviews={true}
+        disableVirtualization={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
       />
     </Box>
   );

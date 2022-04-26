@@ -41,6 +41,7 @@ export const Card = ({
                   resizeMode="cover"
                   width={'30%'}
                   rounded="md"
+                  opacity={isPressed ? 0.8 : 1.0}
                 />
                 <Stack space={2} width="66%">
                   <HStack

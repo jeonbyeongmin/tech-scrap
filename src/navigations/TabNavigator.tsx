@@ -42,6 +42,7 @@ export const TabNavigator = () => {
           tabBarIcon: ({color, size}) => (
             <Ionicons name="bookmarks-outline" color={color} size={size} />
           ),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
