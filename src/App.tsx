@@ -5,7 +5,7 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {useColorScheme} from 'react-native';
-import {NativeBaseProvider} from 'native-base';
+import {NativeBaseProvider, extendTheme} from 'native-base';
 import {StackNavigator} from './navigations/StackNavigator';
 import {QueryClient, QueryClientProvider} from 'react-query';
 
@@ -17,13 +17,19 @@ const MyTheme = {
   },
 };
 
+// extend the theme
+const customTheme = extendTheme({
+  useSystemColorMode: true,
+  initialColorMode: 'light',
+});
+
 const queryClient = new QueryClient();
 
 const App = () => {
   const scheme = useColorScheme();
   return (
     <QueryClientProvider client={queryClient}>
-      <NativeBaseProvider>
+      <NativeBaseProvider theme={customTheme}>
         <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
           <StackNavigator />
         </NavigationContainer>

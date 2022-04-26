@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export const SettingsScreen = () => {
   return (
-    <Box backgroundColor={'white'} marginY="10px">
+    <Box marginY="10px">
       <VStack>
         <HStack marginX="30px" space={4} alignContent="center" paddingY="15px">
           <Ionicons name="mail-outline" size={25} />
