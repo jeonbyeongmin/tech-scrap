@@ -62,56 +62,52 @@ export const BigCard = ({
   return (
     <Box alignItems="center" width={'100%'} marginBottom={'5'}>
       <Pressable onPress={onPress}>
-        {({isPressed}) => {
-          return (
-            <Box overflow="hidden" bg={isPressed ? 'coolGray.100' : 'white'}>
-              <VStack space={4} paddingX={'20px'} paddingY={4}>
-                <AspectRatio w="100%" ratio={16 / 9}>
-                  <Image
-                    source={{uri: imageUrl}}
-                    alt="image"
-                    defaultSource={defaultImg}
-                    resizeMode="cover"
-                    borderTopRadius={'lg'}
-                  />
-                </AspectRatio>
-                <Stack space={3} paddingX={'3'}>
-                  <HStack
-                    space={3}
-                    justifyContent="space-between"
-                    alignItems="center">
-                    <Text fontSize="12" color="violet.500" fontWeight="500">
-                      {siteName[site].name}
-                    </Text>
+        <Box overflow="hidden">
+          <VStack space={4} paddingX={'20px'} paddingY={4}>
+            <AspectRatio w="100%" ratio={16 / 9}>
+              <Image
+                source={{uri: imageUrl}}
+                alt="image"
+                defaultSource={defaultImg}
+                resizeMode="cover"
+                borderTopRadius={'lg'}
+              />
+            </AspectRatio>
+            <Stack space={3} paddingX={'3'}>
+              <HStack
+                space={3}
+                justifyContent="space-between"
+                alignItems="center">
+                <Text fontSize="12" color="violet.500" fontWeight="500">
+                  {siteName[site].name}
+                </Text>
 
-                    <Views views={views} />
-                  </HStack>
-                  <HStack>
-                    <Heading size="sm" numberOfLines={2} marginBottom={'5px'}>
-                      {title}
-                    </Heading>
-                  </HStack>
-                  <HStack alignItems="center" justifyContent={'space-between'}>
-                    <HStack space={1}>
-                      {category.map((item, idx) => {
-                        return idx < 3 ? <Tag key={item} item={item} /> : null;
-                      })}
-                    </HStack>
-                    <Pressable onPress={() => handleScrapPost(postInfo)}>
-                      {scrapItems?.find(
-                        element => element.PostId === postInfo.PostId,
-                      ) ? (
-                        <BookmarkIcon />
-                      ) : (
-                        <BookmarkOutlineIcon />
-                      )}
-                    </Pressable>
-                  </HStack>
-                </Stack>
-              </VStack>
-            </Box>
-          );
-        }}
+                <Views views={views} />
+              </HStack>
+              <HStack>
+                <Heading size="sm" numberOfLines={2} marginBottom={'5px'}>
+                  {title}
+                </Heading>
+              </HStack>
+              <HStack alignItems="center" justifyContent={'space-between'}>
+                <HStack space={1}>
+                  {category.map((item, idx) => {
+                    return idx < 3 ? <Tag key={item} item={item} /> : null;
+                  })}
+                </HStack>
+                <Pressable onPress={() => handleScrapPost(postInfo)}>
+                  {scrapItems?.find(
+                    element => element.PostId === postInfo.PostId,
+                  ) ? (
+                    <BookmarkIcon />
+                  ) : (
+                    <BookmarkOutlineIcon />
+                  )}
+                </Pressable>
+              </HStack>
+            </Stack>
+          </VStack>
+        </Box>
       </Pressable>
     </Box>
   );
