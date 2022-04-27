@@ -1,18 +1,9 @@
-import axios from 'axios';
 import {useInfiniteQuery} from 'react-query';
+import getAllPosts from '@common/api/getAllPostsAPI';
 
 export const useGetPostsQuery = () => {
   const fetchPosts = async ({pageParam = {PostId: '', Type: ''}}) => {
-    const response = await axios.get(
-      'https://n0yd13qpbc.execute-api.ap-northeast-2.amazonaws.com/dev/post',
-      {
-        params: {
-          postId: pageParam.PostId,
-          type: pageParam.Type,
-        },
-      },
-    );
-    const result = response.data;
+    const result = await getAllPosts(pageParam);
 
     return {
       result: result.Items,
