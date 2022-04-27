@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {
   Avatar,
   Box,
@@ -20,10 +20,6 @@ export const SelectBlogScreen = () => {
     '@unselected_blog',
     unselectedBlogState,
   );
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handleSelectBlog = useCallback(
     async (item: string) => {
