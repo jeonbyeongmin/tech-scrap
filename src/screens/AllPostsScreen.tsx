@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Box, HStack, Pressable, Spinner, VStack} from 'native-base';
 import {SwipeListView} from 'react-native-swipe-list-view';
+import {scrapState} from '@store/scrapState';
 import {Post, PostItem} from '@common/types/Post';
 import {TabNavigationProp} from '@common/types/NavigationType';
 import {useAsyncStorageQuery} from '~/common/hooks/useAsyncStorageQuery';
@@ -21,8 +22,10 @@ export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
     fetchNextPage,
   } = useGetPostsQuery();
 
-  const {data: scrapItems, setData: setScrapItems} =
-    useAsyncStorageQuery<Post>('@scrap_item');
+  const {data: scrapItems, setData: setScrapItems} = useAsyncStorageQuery<Post>(
+    '@scrap_item',
+    scrapState,
+  );
 
   const handleScrapPost = useCallback(
     async (rowMap: any, item: Post) => {

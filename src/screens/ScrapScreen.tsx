@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {Box, HStack, Pressable, VStack} from 'native-base';
+import {scrapState} from '@store/scrapState';
 import {useAsyncStorageQuery} from '@common/hooks/useAsyncStorageQuery';
 import {TabNavigationProp} from '@common/types/NavigationType';
 import {Post, PostItem} from '@common/types/Post';
@@ -10,8 +11,10 @@ import {CustomSpinner} from '@components/atoms/CustomSpinner';
 import {Card} from '@components/organisms/Card';
 
 export const ScrapScreen = ({navigation}: TabNavigationProp) => {
-  const {data, isLoading, isError, setData} =
-    useAsyncStorageQuery<Post>('@scrap_item');
+  const {data, isLoading, isError, setData} = useAsyncStorageQuery<Post>(
+    '@scrap_item',
+    scrapState,
+  );
 
   const handleScrapPost = useCallback(
     async (rowMap: any, item: Post) => {

@@ -1,8 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
+import {RecoilState, useRecoilState} from 'recoil';
 
-export const useAsyncStorageQuery = <T,>(key: string) => {
-  const [data, setData] = useState<Array<T>>();
+export const useAsyncStorageQuery = <T,>(
+  key: string,
+  initialState: RecoilState<T[]>,
+) => {
+  const [data, setData] = useRecoilState<T[]>(initialState);
+  // const [data, setData] = useState<Array<T>>();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<unknown>();
@@ -15,7 +20,7 @@ export const useAsyncStorageQuery = <T,>(key: string) => {
 
         if (jsonValue) {
           const value: T[] = jsonValue != null ? JSON.parse(jsonValue) : null;
-          setData(value);
+          setData(value.reverse());
         }
 
         setIsLoading(false);
@@ -27,7 +32,7 @@ export const useAsyncStorageQuery = <T,>(key: string) => {
     }
 
     fetchData();
-  }, [key]);
+  }, [key, setData]);
 
   return {isLoading, setData, error, isError, data};
 };

@@ -8,6 +8,7 @@ import {useColorScheme} from 'react-native';
 import {NativeBaseProvider, extendTheme} from 'native-base';
 import {StackNavigator} from './navigations/StackNavigator';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import {RecoilRoot} from 'recoil';
 
 const MyTheme = {
   ...DefaultTheme,
@@ -29,11 +30,13 @@ const App = () => {
   const scheme = useColorScheme();
   return (
     <QueryClientProvider client={queryClient}>
-      <NativeBaseProvider theme={customTheme}>
-        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
-          <StackNavigator />
-        </NavigationContainer>
-      </NativeBaseProvider>
+      <RecoilRoot>
+        <NativeBaseProvider theme={customTheme}>
+          <NavigationContainer theme={scheme === 'dark' ? DarkTheme : MyTheme}>
+            <StackNavigator />
+          </NavigationContainer>
+        </NativeBaseProvider>
+      </RecoilRoot>
     </QueryClientProvider>
   );
 };
