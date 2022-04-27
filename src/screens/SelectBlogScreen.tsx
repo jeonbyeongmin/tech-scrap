@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Box, FlatList, HStack, Switch, Text} from 'native-base';
+import {Avatar, Box, FlatList, HStack, Switch, Text} from 'native-base';
 import {siteName} from '@common/utils/siteName';
 
 export const SelectBlogScreen = () => {
@@ -11,15 +11,19 @@ export const SelectBlogScreen = () => {
           paddingX={'20px'}
           paddingY={4}
           justifyContent="space-between">
-          <Text alignSelf="center" fontSize="16px" color="coolGray.800">
-            {item}
-          </Text>
+          <HStack space={6} alignContent={'center'}>
+            <Avatar bg="white" source={item.imageSource} />
+            <Text alignSelf="center" fontSize="16px" color="coolGray.800">
+              {item.name}
+            </Text>
+          </HStack>
+
           <Switch
             defaultIsChecked
-            size="sm"
-            onTrackColor="indigo.200"
-            onThumbColor="indigo.500"
-            offThumbColor="indigo.50"
+            size="md"
+            onTrackColor="violet.200"
+            onThumbColor="violet.500"
+            offThumbColor="violet.50"
             alignSelf="center"
           />
         </HStack>
@@ -36,7 +40,7 @@ export const SelectBlogScreen = () => {
         showsVerticalScrollIndicator={false}
         renderItem={renderItem}
         initialNumToRender={15}
-        keyExtractor={item => item}
+        keyExtractor={item => item.name}
       />
     </Box>
   );

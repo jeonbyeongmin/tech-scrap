@@ -48,7 +48,7 @@ export const Card = ({
                     justifyContent="space-between"
                     alignItems="center">
                     <Text fontSize="12" color="violet.500" fontWeight="500">
-                      {siteName[site]}
+                      {siteName[site].name}
                     </Text>
                     <Text fontSize="12" color="coolGray.600" fontWeight="400">
                       {pubDate}
