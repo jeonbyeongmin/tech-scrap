@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {Box, HStack, Pressable, VStack} from 'native-base';
-import {scrapState} from '@store/scrapState';
+import {scrapState} from '@store/atoms';
 import {useAsyncStorageQuery} from '@common/hooks/useAsyncStorageQuery';
 import {TabNavigationProp} from '@common/types/NavigationType';
 import {Post, PostItem} from '@common/types/Post';
@@ -22,22 +22,14 @@ export const ScrapScreen = ({navigation}: TabNavigationProp) => {
         rowMap[item.PostId].closeRow();
       }
 
-      if (data) {
-        const newScrapItems = data?.find(
-          element => element.PostId === item.PostId,
-        )
-          ? data.filter(element => element.PostId !== item.PostId)
-          : [...data, item];
+      const newScrapItems = data?.find(
+        element => element.PostId === item.PostId,
+      )
+        ? data.filter(element => element.PostId !== item.PostId)
+        : [...data, item];
 
-        setData(newScrapItems);
-        await AsyncStorage.setItem(
-          '@scrap_item',
-          JSON.stringify(newScrapItems),
-        );
-      } else {
-        const jsonValue = JSON.stringify([item]);
-        await AsyncStorage.setItem('@scrap_item', jsonValue);
-      }
+      setData(newScrapItems);
+      await AsyncStorage.setItem('@scrap_item', JSON.stringify(newScrapItems));
     },
     [data, setData],
   );
@@ -101,7 +93,6 @@ export const ScrapScreen = ({navigation}: TabNavigationProp) => {
         windowSize={15}
         rightOpenValue={-80}
         removeClippedSubviews={true}
-        disableVirtualization={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       />

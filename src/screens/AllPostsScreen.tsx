@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Box, HStack, Pressable, Spinner, VStack} from 'native-base';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {scrapState} from '@store/scrapState';
+import {scrapState, unselectedBlogState} from '@store/atoms';
 import {Post, PostItem} from '@common/types/Post';
 import {TabNavigationProp} from '@common/types/NavigationType';
 import {useAsyncStorageQuery} from '~/common/hooks/useAsyncStorageQuery';
@@ -27,28 +27,25 @@ export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
     scrapState,
   );
 
+  const {data: unselectedBlogs} = useAsyncStorageQuery<string>(
+    '@unselected_blog',
+    unselectedBlogState,
+  );
+
   const handleScrapPost = useCallback(
     async (rowMap: any, item: Post) => {
       if (rowMap[item.PostId]) {
         rowMap[item.PostId].closeRow();
       }
 
-      if (scrapItems) {
-        const newScrapItems = scrapItems?.find(
-          element => element.PostId === item.PostId,
-        )
-          ? scrapItems.filter(element => element.PostId !== item.PostId)
-          : [...scrapItems, item];
+      const newScrapItems = scrapItems?.find(
+        element => element.PostId === item.PostId,
+      )
+        ? scrapItems.filter(element => element.PostId !== item.PostId)
+        : [...scrapItems, item];
 
-        setScrapItems(newScrapItems);
-        await AsyncStorage.setItem(
-          '@scrap_item',
-          JSON.stringify(newScrapItems),
-        );
-      } else {
-        const jsonValue = JSON.stringify([item]);
-        await AsyncStorage.setItem('@scrap_item', jsonValue);
-      }
+      setScrapItems(newScrapItems);
+      await AsyncStorage.setItem('@scrap_item', JSON.stringify(newScrapItems));
     },
     [scrapItems, setScrapItems],
   );
@@ -108,7 +105,14 @@ export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
   return (
     <Box height={'100%'}>
       <SwipeListView
-        data={data?.pages.map(page => page.result).flat()}
+        data={data?.pages
+          .map(page => page.result)
+          .flat()
+          .filter(item =>
+            unselectedBlogs.find(findItem => findItem === item.Site)
+              ? false
+              : true,
+          )}
         keyExtractor={(item: Post) => item.PostId}
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}
@@ -127,7 +131,6 @@ export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
         windowSize={15}
         rightOpenValue={-80}
         removeClippedSubviews={true}
-        disableVirtualization={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
       />

@@ -5,3 +5,8 @@ export const scrapState = atom<Post[]>({
   key: 'scrapState',
   default: [],
 });
+
+export const unselectedBlogState = atom<string[]>({
+  key: 'unselectedBlogState',
+  default: [],
+});

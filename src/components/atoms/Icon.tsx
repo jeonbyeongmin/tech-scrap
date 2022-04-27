@@ -37,3 +37,11 @@ export const BookmarkOutlineIcon = () => {
 export const BookmarkIcon = () => {
   return <Ionicons name="bookmark" size={20} />;
 };
+
+export const HeartOutlineIcon = () => {
+  return <Ionicons name="heart-outline" size={25} />;
+};
+
+export const HeartIcon = () => {
+  return <Ionicons name="heart" color={'#eb0626'} size={25} />;
+};
