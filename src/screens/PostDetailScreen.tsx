@@ -13,7 +13,7 @@ export const PostDetailScreen = ({
 
   useEffect(() => {
     navigation.setOptions({
-      title: siteName[title],
+      title: siteName[title].name,
     });
   }, [navigation, title]);
 

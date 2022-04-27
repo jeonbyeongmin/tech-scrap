@@ -93,7 +93,7 @@ export const ScrapScreen = ({navigation}: TabNavigationProp) => {
   return (
     <Box height={'100%'}>
       <SwipeListView
-        data={data}
+        data={[...data].reverse()}
         keyExtractor={(item: Post) => item.PostId}
         renderItem={renderItem}
         renderHiddenItem={renderHiddenItem}

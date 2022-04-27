@@ -7,7 +7,6 @@ export const useAsyncStorageQuery = <T,>(
   initialState: RecoilState<T[]>,
 ) => {
   const [data, setData] = useRecoilState<T[]>(initialState);
-  // const [data, setData] = useState<Array<T>>();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState<unknown>();
@@ -20,7 +19,7 @@ export const useAsyncStorageQuery = <T,>(
 
         if (jsonValue) {
           const value: T[] = jsonValue != null ? JSON.parse(jsonValue) : null;
-          setData(value.reverse());
+          setData(value);
         }
 
         setIsLoading(false);
