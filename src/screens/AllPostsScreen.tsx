@@ -10,6 +10,7 @@ import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 import {BookmarkIcon, BookmarkOutlineIcon} from '@components/atoms/Icon';
 import {CustomSpinner} from '@components/atoms/CustomSpinner';
 import {Card} from '@components/organisms/Card';
+import {useViewsCounter} from '~/common/hooks/useViewsCounter';
 
 export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
   const {
@@ -21,6 +22,8 @@ export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
     isRefetching,
     fetchNextPage,
   } = useGetPostsQuery();
+
+  const viewsCountMutation = useViewsCounter();
 
   const {data: scrapItems, setData: setScrapItems} = useAsyncStorageQuery<Post>(
     '@scrap_item',
@@ -59,15 +62,16 @@ export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
         category={item.Category}
         views={item.Views}
         imageUrl={item.ImageUrl}
-        onPress={() =>
+        onPress={() => {
+          viewsCountMutation.mutate(item.PostId);
           navigation.navigate('PostDetailScreen', {
             url: item.SiteUrl,
             title: item.Site,
-          })
-        }
+          });
+        }}
       />
     ),
-    [navigation],
+    [navigation, viewsCountMutation],
   );
 
   const renderHiddenItem = useCallback(
