@@ -5,12 +5,12 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 import {scrapState, unselectedBlogState} from '@store/atoms';
 import {Post, PostItem} from '@common/types/Post';
 import {TabNavigationProp} from '@common/types/NavigationType';
-import {useAsyncStorageQuery} from '~/common/hooks/useAsyncStorageQuery';
+import {useViewsCounter} from '@common/hooks/useViewsCounter';
+import {useAsyncStorageQuery} from '@common/hooks/useAsyncStorageQuery';
 import {useGetPostsQuery} from '@common/hooks/useGetPostsQuery';
 import {BookmarkIcon, BookmarkOutlineIcon} from '@components/atoms/Icon';
 import {CustomSpinner} from '@components/atoms/CustomSpinner';
 import {Card} from '@components/organisms/Card';
-import {useViewsCounter} from '~/common/hooks/useViewsCounter';
 
 export const AllPostsScreen = ({navigation}: TabNavigationProp) => {
   const {

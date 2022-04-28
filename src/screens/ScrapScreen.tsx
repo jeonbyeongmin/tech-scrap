@@ -4,6 +4,7 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 import {Box, HStack, Pressable, VStack} from 'native-base';
 import {scrapState} from '@store/atoms';
 import {useAsyncStorageQuery} from '@common/hooks/useAsyncStorageQuery';
+import {useViewsCounter} from '@common/hooks/useViewsCounter';
 import {TabNavigationProp} from '@common/types/NavigationType';
 import {Post, PostItem} from '@common/types/Post';
 import {BookmarkIcon} from '@components/atoms/Icon';
@@ -15,6 +16,8 @@ export const ScrapScreen = ({navigation}: TabNavigationProp) => {
     '@scrap_item',
     scrapState,
   );
+
+  const viewsCountMutation = useViewsCounter();
 
   const handleScrapPost = useCallback(
     async (rowMap: any, item: Post) => {
@@ -37,21 +40,23 @@ export const ScrapScreen = ({navigation}: TabNavigationProp) => {
   const renderItem = useCallback(
     ({item}: PostItem) => (
       <Card
+        isViewShow={false}
         title={item.Title}
         site={item.Site}
         timestamp={item.Timestamp}
         category={item.Category}
         views={item.Views}
         imageUrl={item.ImageUrl}
-        onPress={() =>
+        onPress={() => {
+          viewsCountMutation.mutate(item.PostId);
           navigation.navigate('PostDetailScreen', {
             url: item.SiteUrl,
             title: item.Site,
-          })
-        }
+          });
+        }}
       />
     ),
-    [navigation],
+    [navigation, viewsCountMutation],
   );
 
   const renderHiddenItem = useCallback(

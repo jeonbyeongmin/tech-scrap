@@ -13,6 +13,7 @@ interface ICard {
   timestamp: Date;
   views: number;
   imageUrl: string;
+  isViewShow?: boolean;
   onPress?: () => void;
 }
 
@@ -23,6 +24,7 @@ export const Card = ({
   category,
   timestamp,
   imageUrl,
+  isViewShow = true,
   onPress,
 }: ICard) => {
   const pubDate = useConvertDate(timestamp);
@@ -65,7 +67,7 @@ export const Card = ({
                         ) : null;
                       })}
                     </HStack>
-                    <Views views={views} />
+                    {isViewShow ? <Views views={views} /> : null}
                   </HStack>
                 </Stack>
               </HStack>

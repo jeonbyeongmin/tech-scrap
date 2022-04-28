@@ -4,6 +4,7 @@ import {useQuery} from 'react-query';
 import getHotPosts from '@common/api/getHotPostsAPI';
 import {TabNavigationProp} from '@common/types/NavigationType';
 import {PostItem} from '@common/types/Post';
+import {useViewsCounter} from '@common/hooks/useViewsCounter';
 import {BigCard} from '@components/organisms/BigCard';
 import {CustomSpinner} from '@components/atoms/CustomSpinner';
 
@@ -12,6 +13,8 @@ export const HotPostsScreen = ({navigation}: TabNavigationProp) => {
     'hotPost',
     getHotPosts,
   );
+
+  const viewsCountMutation = useViewsCounter();
 
   const renderItem = useCallback(
     ({item}: PostItem) => (
@@ -23,15 +26,16 @@ export const HotPostsScreen = ({navigation}: TabNavigationProp) => {
         category={item.Category}
         views={item.Views}
         imageUrl={item.ImageUrl}
-        onPress={() =>
+        onPress={() => {
+          viewsCountMutation.mutate(item.PostId);
           navigation.navigate('PostDetailScreen', {
             url: item.SiteUrl,
             title: item.Site,
-          })
-        }
+          });
+        }}
       />
     ),
-    [navigation],
+    [navigation, viewsCountMutation],
   );
 
   if (isLoading) {
