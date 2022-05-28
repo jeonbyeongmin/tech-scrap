@@ -43,7 +43,8 @@
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
-    "@types/jest": "^26.0.23",
+    "@testing-library/react-native": "9.1.0",
+    "@types/jest": "27.5.0",
     "@types/react-native": "^0.66.15",
     "@types/react-native-vector-icons": "6.4.10",
     "@types/react-test-renderer": "^17.0.1",
@@ -72,6 +73,16 @@
       "jsx",
       "json",
       "node"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/assetsTransformer.js",
+      "\\.(css|less)$": "<rootDir>/assetsTransformer.js"
+    },
+    "setupFiles": [
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@react-native|react-native|react-native-vector-icons|react-native-swipe-list-view)/)"
     ]
   }
 }
